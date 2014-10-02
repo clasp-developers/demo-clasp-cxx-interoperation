@@ -10,6 +10,7 @@ all-osx-dbg:
 	clang++ -bundle -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 		-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/6.0 \
 		-O0 -g \
+		-Wl,-flat_namespace,-undefined,dynamic_lookup \
 		-Wno-deprecated-register \
 		-I $(CLASP_SOURCE) \
 		-I $(CLASP_SOURCE)/include \

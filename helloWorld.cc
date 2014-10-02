@@ -25,7 +25,7 @@ extern "C" {
         printf("!\n!\n!\n!   Starting CLASP_MAIN\n!\n!\n");
         printf("Expose C++ code to Clasp here\n");
 
-        clbind::package("hello") [
+        clbind::package("HELLO") [
             clbind::def("hello-world",&helloWorld)
             ];
     }
