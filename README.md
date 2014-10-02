@@ -8,6 +8,7 @@ Works on OS X now - linux later.
 To build:  make all-osx
 
 To run:
+<code>
 fry:hello-world$ clasp_boehm_o
 ../../src/clbind/scope.cc:146 Declaring package: LLVM
 ../../src/clbind/scope.cc:146 Declaring package: CLANG-AST
@@ -41,3 +42,4 @@ Hello World
 
 13.6
 > 
+</code>
