@@ -10,16 +10,6 @@
 
 #define EXPORT __attribute__((visibility("default")))
 
-void helloWorld()
-{
-    printf("Hello World\n");
-}
-
-
-double addThreeNumbers(double x, double y, double z)
-{
-    return x+y+z;
-}
 
 class MismatchedSize : public std::exception {};
 
@@ -111,9 +101,7 @@ extern "C" {
     {
         using namespace clbind;
         package("HW") [
-            def("hello-world",&helloWorld)
-            , def("addThreeNumbers",&addThreeNumbers)
-            , class_<DoubleVector>("double-vector" ,no_default_constructor )
+            class_<DoubleVector>("double-vector" ,no_default_constructor )
             .   def_constructor("make-double-vector-with-size",constructor<int>())
             .   def_constructor("make-double-vector-with-values",constructor<vector<double>>())
             .   def("fill",&DoubleVector::fill)
