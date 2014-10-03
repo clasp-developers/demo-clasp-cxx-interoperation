@@ -1,12 +1,12 @@
 # makefile
 #
 
-export EXTERNALS_CLASP_TARGET_DIR = $(HOME)/local/externals-clasp
+export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
 export CLASP_SOURCE = $(HOME)/Development/clasp/src
-
+export CLANG = $(EXTERNALS_BUILD_TARGET_DIR)/release/bin/clang++
 #		-fvisibility=hidden
 
-all-osx-dbg:
+osx-dbg:
 	clang++ -bundle -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 		-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/6.0 \
 		-O0 -g \
@@ -15,16 +15,16 @@ all-osx-dbg:
 		-I $(CLASP_SOURCE) \
 		-I $(CLASP_SOURCE)/include \
 		-I $(CLASP_SOURCE)/clbind/bin/boehm/clang-darwin-4.2.1/release/link-static \
-		-I $(EXTERNALS_CLASP_TARGET_DIR)/common/include \
-		-I $(EXTERNALS_CLASP_TARGET_DIR)/release/include \
+		-I $(EXTERNALS_BUILD_TARGET_DIR)/common/include \
+		-I $(EXTERNALS_BUILD_TARGET_DIR)/release/include \
 		-L $(CLASP_SOURCE)/gctools/bundle \
 		-l gctools_boehm_dbg \
 		-L $(CLASP_SOURCE)/core/bundle \
 		-l core_boehm_dbg \
 		-L $(CLASP_SOURCE)/clbind/bundle \
 		-l clbind_boehm_dbg \
-		-L $(EXTERNALS_CLASP_TARGET_DIR)/common/lib \
-		-L $(EXTERNALS_CLASP_TARGET_DIR)/release/lib \
+		-L $(EXTERNALS_BUILD_TARGET_DIR)/common/lib \
+		-L $(EXTERNALS_BUILD_TARGET_DIR)/release/lib \
 		-lboost_filesystem -lboost_regex -lboost_date_time -lboost_system \
 		-lgmp -lgmpxx \
 		-lgc \
@@ -33,11 +33,14 @@ all-osx-dbg:
 
 
 
+
+linux-dbg:
+	echo Put something extremely clever here to build on linux
+
+
+
 shell:
 	bash
-
-all-linux:
-	echo Put something extremely clever here to build on linux
 
 
 cpp:
@@ -48,16 +51,16 @@ cpp:
 		-I $(CLASP_SOURCE) \
 		-I $(CLASP_SOURCE)/include \
 		-I $(CLASP_SOURCE)/clbind/bin/boehm/clang-darwin-4.2.1/release/link-static \
-		-I $(EXTERNALS_CLASP_TARGET_DIR)/common/include \
-		-I $(EXTERNALS_CLASP_TARGET_DIR)/release/include \
+		-I $(EXTERNALS_BUILD_TARGET_DIR)/common/include \
+		-I $(EXTERNALS_BUILD_TARGET_DIR)/release/include \
 		-L $(CLASP_SOURCE)/gctools/bundle \
 		-l gctools_boehm_opt \
 		-L $(CLASP_SOURCE)/core/bundle \
 		-l core_boehm_opt \
 		-L $(CLASP_SOURCE)/clbind/bundle \
 		-l clbind_boehm_opt \
-		-L $(EXTERNALS_CLASP_TARGET_DIR)/common/lib \
-		-L $(EXTERNALS_CLASP_TARGET_DIR)/release/lib \
+		-L $(EXTERNALS_BUILD_TARGET_DIR)/common/lib \
+		-L $(EXTERNALS_BUILD_TARGET_DIR)/release/lib \
 		-lboost_filesystem -lboost_regex -lboost_date_time -lboost_system \
 		-lgmp -lgmpxx \
 		-lgc \
