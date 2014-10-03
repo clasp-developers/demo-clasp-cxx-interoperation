@@ -100,7 +100,7 @@ extern "C" {
     void CLASP_MAIN()
     {
         using namespace clbind;
-        package("HW") [
+        package("DV") [
             class_<DoubleVector>("double-vector" ,no_default_constructor )
             .   def_constructor("make-double-vector-with-size",constructor<int>())
             .   def_constructor("make-double-vector-with-values",constructor<vector<double>>())
