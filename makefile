@@ -85,9 +85,9 @@ export LINUX_OPTIONS1 = -v -shared -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 		-lreadline
 
 ifeq ($(TARGET_OS),darwin)
-	export OPTIONS = $(DARWIN_OPTIONS)
+	export OPTIONS = $(DARWIN_OPTIONS) $(LOCAL_OPTIONS)
 else
-	export OPTIONS = $(LINUX_OPTIONS)
+	export OPTIONS = $(LINUX_OPTIONS) $(LOCAL_OPTIONS)
 endif
 
 

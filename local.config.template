@@ -3,3 +3,4 @@ export TARGET_OS = darwin
 
 export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
 export CLASP_SOURCE = $(HOME)/Development/clasp/src
+export LOCAL_OPTIONS = 
