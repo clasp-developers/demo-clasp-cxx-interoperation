@@ -109,6 +109,10 @@ all:
 	(cd hello-world; make $*)
 	(cd double-vector; make $*)
 
+test:
+	(cd hello-world; make test)
+	(cd double-vector; make test)
+
 
 all-linux:
 	make TARGET_OS=linux
