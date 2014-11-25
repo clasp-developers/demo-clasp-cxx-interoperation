@@ -3,7 +3,9 @@
 
 include local.config
 
+ifeq ($(CLANG),)
 export CLANG = $(EXTERNALS_BUILD_TARGET_DIR)/release/bin/clang++
+endif
 #		-fvisibility=hidden
 
 export DARWIN_OPTIONS = -bundle -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
@@ -45,17 +47,21 @@ export LINUX_OPTIONS = -v \
 			-I $(CLASP_SOURCE)/core/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE)/clbind/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE) \
-		-L $(CLASP_SOURCE)/gctools/bundle \
-		-l gctools_boehm_opt \
-		-L $(CLASP_SOURCE)/core/bundle \
-		-l core_boehm_opt \
-		-L $(CLASP_SOURCE)/clbind/bundle \
-		-l clbind_boehm_opt \
-		-L $(EXTERNALS_BUILD_TARGET_DIR)/common/lib \
-		-L $(EXTERNALS_BUILD_TARGET_DIR)/release/lib \
+			$(CLASP_SOURCE)/src/gctools/bundle/gctools_boehm_opt.a \
+			$(CLASP_SOURCE)/src/core/bundle/core_boehm_opt.a \
+			$(CLASP_SOURCE)/src/clbind/bundle/clbind_boehm_opt.a \
+#		-L $(CLASP_SOURCE)/gctools/bundle \
+#		-l gctools_boehm_opt \
+#		-L $(CLASP_SOURCE)/core/bundle \
+#		-l core_boehm_opt \
+#		-L $(CLASP_SOURCE)/clbind/bundle \
+#		-l clbind_boehm_opt \
+#		-L $(EXTERNALS_BUILD_TARGET_DIR)/common/lib \
+#		-L $(EXTERNALS_BUILD_TARGET_DIR)/release/lib \
 		-lgmp -lgmpxx \
 		-lgc \
-		-lreadline
+		-lreadline -ltermcap \
+		-Wl,--end-group
 
 
 
