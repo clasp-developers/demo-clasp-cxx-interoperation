@@ -47,6 +47,7 @@ export LINUX_OPTIONS = -v \
 			--shared \
 			-std=c++11 \
 			-D_TARGET_OS_LINUX \
+			-DNDEBUG \
 			-DUSE_BOEHM \
 			-I $(CLASP_SOURCE)/include \
 			-I $(CLASP_SOURCE)/core/bin/boehm/clang-linux-3.6.0/release/link-static \
