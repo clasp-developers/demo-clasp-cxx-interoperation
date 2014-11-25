@@ -41,15 +41,15 @@ export LINUX_OPTIONS = -v \
 			-std=c++11 \
 			-D_TARGET_OS_LINUX \
 			-DUSE_BOEHM \
-			-I $(EXTERNALS_BUILD_TARGET_DIR)/common/include \
-			-I $(EXTERNALS_BUILD_TARGET_DIR)/release/include \
 			-I $(CLASP_SOURCE)/include \
 			-I $(CLASP_SOURCE)/core/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE)/clbind/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE) \
-			$(CLASP_SOURCE)/src/gctools/bundle/gctools_boehm_opt.a \
-			$(CLASP_SOURCE)/src/core/bundle/core_boehm_opt.a \
-			$(CLASP_SOURCE)/src/clbind/bundle/clbind_boehm_opt.a \
+			-Wl,--start-group \
+			$(CLASP_SOURCE)/gctools/bundle/libgctools_boehm_opt.a \
+			$(CLASP_SOURCE)/core/bundle/libcore_boehm_opt.a \
+			$(CLASP_SOURCE)/clbind/bundle/libclbind_boehm_opt.a \
+			-Wl,--end-group \
 #		-L $(CLASP_SOURCE)/gctools/bundle \
 #		-l gctools_boehm_opt \
 #		-L $(CLASP_SOURCE)/core/bundle \
