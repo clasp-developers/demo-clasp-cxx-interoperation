@@ -3,7 +3,11 @@ hello-world
 
 Examples of exposing C++ to Clasp
 
-Use:  make TARGET_OS=linux
-or    make TARGET_OS=darwin
+Copy local.config.template into local.config and edit it to configure your system.
 
-To make on linux or darwin
+Then use:
+<pre>make</pre>  to compile the demos
+
+To run the demos type:
+<pre>make test</pre>
+
