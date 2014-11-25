@@ -38,6 +38,8 @@ export DARWIN_OPTIONS = -bundle -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 #From makefile.faheem
 
 export LINUX_OPTIONS = -v \
+			-fPIC \
+			--shared \
 			-std=c++11 \
 			-D_TARGET_OS_LINUX \
 			-DUSE_BOEHM \
@@ -45,19 +47,17 @@ export LINUX_OPTIONS = -v \
 			-I $(CLASP_SOURCE)/core/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE)/clbind/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE) \
-			-Wl,--start-group \
 			$(CLASP_SOURCE)/gctools/bundle/libgctools_boehm_opt.a \
 			$(CLASP_SOURCE)/core/bundle/libcore_boehm_opt.a \
 			$(CLASP_SOURCE)/clbind/bundle/libclbind_boehm_opt.a \
-			-Wl,--end-group \
 #		-L $(CLASP_SOURCE)/gctools/bundle \
 #		-l gctools_boehm_opt \
 #		-L $(CLASP_SOURCE)/core/bundle \
 #		-l core_boehm_opt \
 #		-L $(CLASP_SOURCE)/clbind/bundle \
 #		-l clbind_boehm_opt \
-#		-L $(EXTERNALS_BUILD_TARGET_DIR)/common/lib \
-#		-L $(EXTERNALS_BUILD_TARGET_DIR)/release/lib \
+		-L $(EXTERNALS_BUILD_TARGET_DIR)/common/lib \
+		-L $(EXTERNALS_BUILD_TARGET_DIR)/release/lib \
 		-lgmp -lgmpxx \
 		-lgc \
 		-lreadline -ltermcap \
