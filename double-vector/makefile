@@ -7,4 +7,4 @@ all:
 
 
 test:
-	clasp_boehm_o -l double-vector.lsp
+	$(CLASP_BOEHM) -l double-vector.lsp

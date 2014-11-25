@@ -6,6 +6,11 @@ include local.config
 ifeq ($(CLANG),)
 export CLANG = $(EXTERNALS_BUILD_TARGET_DIR)/release/bin/clang++
 endif
+
+ifeq ($(CLASP_BOEHM),)
+export CLASP_BOEHM = clasp_boehm_o
+endif
+
 #		-fvisibility=hidden
 
 export DARWIN_OPTIONS = -bundle -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
@@ -47,9 +52,11 @@ export LINUX_OPTIONS = -v \
 			-I $(CLASP_SOURCE)/core/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE)/clbind/bin/boehm/clang-linux-3.6.0/release/link-static \
 			-I $(CLASP_SOURCE) \
+			-Wl,--start-group \
 			$(CLASP_SOURCE)/gctools/bundle/libgctools_boehm_opt.a \
 			$(CLASP_SOURCE)/core/bundle/libcore_boehm_opt.a \
 			$(CLASP_SOURCE)/clbind/bundle/libclbind_boehm_opt.a \
+			-Wl,--end-group \
 #		-L $(CLASP_SOURCE)/gctools/bundle \
 #		-l gctools_boehm_opt \
 #		-L $(CLASP_SOURCE)/core/bundle \
@@ -64,8 +71,8 @@ export LINUX_OPTIONS = -v \
 		-Wl,--end-group
 
 
-
-export LINUX_OPTIONS1 = -v -shared -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
+# for reference only
+export LINUX_OPTIONS_OLD_BROKEN = -v -shared -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 			-D_TARGET_OS_LINUX \
 			-x c++ \
 			-O0 -g \

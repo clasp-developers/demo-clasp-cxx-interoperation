@@ -8,4 +8,4 @@ all:
 
 
 test:
-	clasp_boehm_o -l hello-world.lsp
+	$(CLASP_BOEHM) -l hello-world.lsp
