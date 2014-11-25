@@ -47,9 +47,6 @@ export LINUX_OPTIONS = -v -shared -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 		-I $(EXTERNALS_BUILD_TARGET_DIR)/common/include \
 		-I $(EXTERNALS_BUILD_TARGET_DIR)/release/include \
 		-I $(EXTERNALS_BUILD_TARGET_DIR)/release/lib/clang/3.6.0/include \
-		-internal-isystem /home/meister/local/gcc-4.8.3/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../include/c++/4.8.3 \
-		 -internal-isystem /home/meister/local/gcc-4.8.3/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../include/c++/4.8.3/x86_64-redhat-linux \
-		-internal-isystem /home/meister/local/gcc-4.8.3/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../include/c++/4.8.3/backward  \
 		-L $(CLASP_SOURCE)/gctools/bundle \
 		-l gctools_boehm_opt \
 		-L $(CLASP_SOURCE)/core/bundle \
@@ -70,8 +67,8 @@ endif
 
 
 all:
-	(cd hello-world; make)
-	(cd double-vector; make)
+	(cd hello-world; make $*)
+	(cd double-vector; make $*)
 
 
 all-linux:
