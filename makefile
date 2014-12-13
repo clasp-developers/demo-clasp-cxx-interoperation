@@ -12,9 +12,12 @@ export CLASP_BOEHM = clasp_boehm_o
 endif
 
 #		-fvisibility=hidden
+#
+# -DNDEBUG suppresses link_compatibility checking in clbind that always fails - must fix
 
 export DARWIN_OPTIONS = -bundle -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 			-D_TARGET_OS_DARWIN \
+			-DNDEBUG \
 			-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/6.0 \
 			-O3 \
 			-Wl,-flat_namespace,-undefined,dynamic_lookup \
