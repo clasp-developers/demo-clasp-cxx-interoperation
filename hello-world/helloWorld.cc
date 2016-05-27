@@ -2,7 +2,8 @@
 // Set up a clasp.h include file with all the good stuff
 //
 #include <stdio.h>
-#include "clasp.h"
+#include <clbind.h>
+#include <lambdaListHandler.h>
 
 #define EXPORT __attribute__((visibility("default")))
 

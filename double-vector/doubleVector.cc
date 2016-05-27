@@ -2,12 +2,12 @@
 // Set up a clasp.h include file with all the good stuff
 //
 #include <stdio.h>
-#include "clasp.h"
-#include "core/numbers.h"
-#include "core/lispVector.h"
-#include "core/vectorObjects.h"
-#include "core/translators.h"  // assorted translators for string etc
-#include "core/cons.h"
+#include <clasp.h>
+#include <numbers.h>
+#include <lispVector.h>
+#include <vectorObjects.h>
+#include <translators.h>  // assorted translators for string etc
+#include <cons.h>
 
 #define DIAG
 
