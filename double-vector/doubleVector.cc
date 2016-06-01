@@ -78,42 +78,44 @@ public:
 
 
 namespace translate {
-    template <> struct to_object<const vector<double>&>
+    template <typename T> struct to_object<const vector<T>&>
     {
-        static core::T_sp convert(const vector<double>& v)
+        static core::T_sp convert(const vector<T>& v)
         {
             core::VectorObjects_sp vec;
             vec->adjust(_Nil<core::T_O>(),_Nil<core::Cons_O>(),v.size());
-	    for ( int i(0); i<v.size(); ++i ) {
-		vec->setf_elt(i,core::DoubleFloat_O::create(v[i]));
-	    }
+            for ( int i(0); i<v.size(); ++i ) {
+	            vec->setf_elt(i, to_object<core::Number_O>::convert(v[i]));
+            }
             return vec;
         }
     };
 
-    template <> struct from_object<const vector<double>& >
+    template <typename T> struct from_object<const vector<T>& >
     {
-        typedef vector<double> DeclareType;
+        typedef vector<T> DeclareType;
         DeclareType _v;
         from_object(core::T_sp obj)
         {
             if ( obj.nilp() ) {
                 this->_v.clear();
             } else if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() ) {
-                // Translate a CONS list of doubles into a vector<double>
+                // Translate a CONS list of doubles into a vector<T>
                 this->_v.resize(list->length());
                 size_t idx=0;
                 for ( ; list.notnilp(); list=cCdr(list) ) {
-                    this->_v[idx++] = oCar(list).as<core::Number_O>()->as_double();
+	                if (oCar(list).notnilp()) {
+		                this->_v[idx++] = from_object<T>(oCar(list))._v;
+	                }
                 }
             } else if ( core::Vector_sp vec = obj.asOrNull<core::Vector_O>() ) {
-                // Translate a VECTOR of doubles into a vector<double>
+                // Translate a VECTOR of doubles into a vector<T>
                 this->_v.resize(vec->length());
                 for ( size_t idx(0); idx<vec->length(); ++idx ) {
-                    this->_v[idx] = (*vec)[idx].as<core::Number_O>()->as_double();
+	                this->_v[idx] = from_object<T>((*vec)[idx])._v;
                 }
             } else {
-                SIMPLE_ERROR(BF("Could not convert %s to vector<double>") % core::_rep_(obj));
+	            SIMPLE_ERROR(BF("Could not convert %s to vector<%s>") % core::_rep_(obj) % typeid(T).name());
             }
         }
     };
@@ -134,8 +136,8 @@ extern "C" {
             .   def("fill",&DoubleVector::fill)
             .   def("add",&DoubleVector::add)
             .   def("dot",&DoubleVector::dot)
-	    .   def("at",&DoubleVector::at)
-	    .   def("dump",&DoubleVector::dump,policies<>(),ARGS_dump,DECL_dump,DOCS_dump)
+            .   def("at",&DoubleVector::at)
+            .   def("dump",&DoubleVector::dump,policies<>(),ARGS_dump,DECL_dump,DOCS_dump)
             ];
     }
 }
