@@ -10,6 +10,8 @@ export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
 #
 # Location of Clasp source code.
 export CLASP_SOURCE = $(HOME)/Development/clasp/src
+export CLASP_HOME = $(HOME/Development/clasp)
+export XCODE_INCLUDE = # FILL ME OUT
 
 #
 # Extra options for build

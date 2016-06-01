@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# Config files
+local.config
+
+# Clasp built files
+*.bundle
