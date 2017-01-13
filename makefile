@@ -1,5 +1,6 @@
 # makefile
 #
+export CLASP_DEMO_HOME = $(shell pwd)
 
 export TARGET_OS ?= $(shell uname)
 export TARGET_OS := $(or $(filter $(TARGET_OS), Linux),\
@@ -12,6 +13,9 @@ export TARGET_OS := $(or $(filter $(TARGET_OS), Linux),\
 # CLASP_RUNTIME  (boehm, mps, boehmdc)
 
 include $(wildcard local.config)
+
+# setup the clasp executable
+export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/cclasp-$(CLASP_RUNTIME)
 
 # These are things that I'm hardcoding for now
 # but should be set up better using waf
@@ -51,7 +55,12 @@ all-darwin:
 	make TARGET_OS=darwin
 
 
+#
+# Run the demos after typing:    make shell
+#    - this will set CLASP_DEMO_HOME and the demos will find the bitcode files
+#
 shell:
+	echo Now CLASP_DEMO_HOME is set to $(CLASP_DEMO_HOME)
 	bash
 
 

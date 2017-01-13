@@ -1,9 +1,9 @@
 # makefile
 #
 
-all:
+helloWorld.bc:
 	$(CLANG) $(OPTIONS) -o helloWorld.bc helloWorld.cc
 
 
-test:
-	$(CLASP_BOEHM) -l hello-world.lsp
+test: helloWorld.bc
+	$(CLASP) -l hello-world.lsp

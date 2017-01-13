@@ -1,9 +1,9 @@
 # makefile
 #
 
-all:
+doubleVector.bc:
 	$(CLANG) $(OPTIONS) -o doubleVector.bc doubleVector.cc
 
 
-test: doubleVector.bundle
-	$(CLASP_BOEHM) -l double-vector.lsp
+test: doubleVector.bc
+	$(CLASP) -l double-vector.lsp
