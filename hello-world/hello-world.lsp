@@ -2,6 +2,7 @@
 ;;; The path to the bitcode file needs to be added to the load command argument
 ;;;
 
+(setf *default-pathname-defaults* #P"path/to/helloWorld.bc")
 (load "helloWorld.bc")
 (hw:hello-world)
 

@@ -2,6 +2,7 @@
 ;;;
 ;;; The path needs to be added to the load command
 ;;;
+(setf *default-pathname-defaults* #P"path/to/doubleVector.bc")
 (load "doubleVector.bc")
 (defparameter *a* (dv:make-double-vector-with-values '(1 2 3)))
 (defparameter *b* (dv:make-double-vector-with-values '(4 5 6)))
