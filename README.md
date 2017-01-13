@@ -8,8 +8,9 @@ Copy local.config.template into local.config and edit it to configure your syste
 To compile the demos use:
 <pre>make</pre> 
 
-
 To run the demos type:
 <pre>make test</pre>
 
-Currently these demos are alpha and they require the clasp source code tree.  Soon I will copy from the source code tree everything that is needed and put it in the clasp application directory so that C++ libraries can be exposed without requiring the clasp source code tree.
+If you have any questions - come see us on IRC at:
+
+https://www.irccloud.com/#!/ircs://irc.freenode.net:6697/%23clasp
