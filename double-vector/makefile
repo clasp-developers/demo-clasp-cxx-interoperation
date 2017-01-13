@@ -1,10 +1,8 @@
 # makefile
 #
 
-all: doubleVector.bundle
-
-doubleVector.bundle: doubleVector.cc
-	$(CLANG) $(OPTIONS) -o doubleVector.bundle doubleVector.cc
+all:
+	$(CLANG) $(OPTIONS) -o doubleVector.bc doubleVector.cc
 
 
 test: doubleVector.bundle

@@ -1,10 +1,8 @@
 # makefile
 #
 
-
 all:
-	@echo $(CLANG) $(OPTIONS) -o helloWorld.bundle helloWorld.cc
-	$(CLANG) $(OPTIONS) -o helloWorld.bundle helloWorld.cc
+	$(CLANG) $(OPTIONS) -o helloWorld.bc helloWorld.cc
 
 
 test:

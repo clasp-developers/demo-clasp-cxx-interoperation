@@ -2,17 +2,9 @@
 // Set up a clasp.h include file with all the good stuff
 //
 #include <stdio.h>
-#include <clasp.h>
-#include <numbers.h>
-#include <lispVector.h>
-#include <vectorObjects.h>
-#include <translators.h>  // assorted translators for string etc
-#include <cons.h>
+#include <clasp/clasp.h>
 
 #define DIAG
-
-#define EXPORT __attribute__((visibility("default")))
-
 
 class MismatchedSize : public std::exception {};
 
@@ -82,10 +74,9 @@ namespace translate {
     {
         static core::T_sp convert(const vector<T>& v)
         {
-            core::VectorObjects_sp vec;
-            vec->adjust(_Nil<core::T_O>(),_Nil<core::Cons_O>(),v.size());
+            core::SimpleVector_sp vec = core::SimpleVector_O::make(v.size());
             for ( int i(0); i<v.size(); ++i ) {
-	            vec->setf_elt(i, to_object<core::Number_O>::convert(v[i]));
+		(*vec)[i] = to_object<T>::convert(v[i]);
             }
             return vec;
         }
@@ -99,23 +90,23 @@ namespace translate {
         {
             if ( obj.nilp() ) {
                 this->_v.clear();
-            } else if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() ) {
+            } else if ( core::List_sp list = obj.asOrNull<core::List_V>() ) {
                 // Translate a CONS list of doubles into a vector<T>
-                this->_v.resize(list->length());
+                this->_v.resize(core::cl__length(list));
                 size_t idx=0;
-                for ( ; list.notnilp(); list=cCdr(list) ) {
-	                if (oCar(list).notnilp()) {
-		                this->_v[idx++] = from_object<T>(oCar(list))._v;
-	                }
+                for ( auto c : list ) {
+		    if (oCar(c).notnilp()) {
+			this->_v[idx++] = from_object<T>(oCar(c))._v;
+		    }
                 }
-            } else if ( core::Vector_sp vec = obj.asOrNull<core::Vector_O>() ) {
+            } else if (core::Vector_sp vec = obj.asOrNull<core::Vector_O>() ) {
                 // Translate a VECTOR of doubles into a vector<T>
-                this->_v.resize(vec->length());
+                this->_v.resize(core::cl__length(vec));
                 for ( size_t idx(0); idx<vec->length(); ++idx ) {
-	                this->_v[idx] = from_object<T>((*vec)[idx])._v;
+		    this->_v[idx] = from_object<T>(vec->rowMajorAref(idx))._v;
                 }
             } else {
-	            SIMPLE_ERROR(BF("Could not convert %s to vector<%s>") % core::_rep_(obj) % typeid(T).name());
+		SIMPLE_ERROR(BF("Could not convert %s to vector<%s>") % core::_rep_(obj) % typeid(T).name());
             }
         }
     };
@@ -123,21 +114,21 @@ namespace translate {
 
 
 
-extern "C" {
-    EXPORT
-    void CLASP_MAIN()
-    {
-	printf("Exporting functions\n");
-        using namespace clbind;
-        package("DV") [
-            class_<DoubleVector>("double-vector" ,no_default_constructor )
-            .   def_constructor("make-double-vector-with-size",constructor<int>())
-            .   def_constructor("make-double-vector-with-values",constructor<const vector<double>&>())
-            .   def("fill",&DoubleVector::fill)
-            .   def("add",&DoubleVector::add)
-            .   def("dot",&DoubleVector::dot)
-            .   def("at",&DoubleVector::at)
-            .   def("dump",&DoubleVector::dump,policies<>(),ARGS_dump,DECL_dump,DOCS_dump)
-            ];
-    }
-}
+void startup()
+{
+    printf("Exporting functions\n");
+    using namespace clbind;
+    package("DV") [
+		   class_<DoubleVector>("double-vector" ,no_default_constructor )
+		   .   def_constructor("make-double-vector-with-size",constructor<int>())
+		   .   def_constructor("make-double-vector-with-values",constructor<const vector<double>&>())
+		   .   def("fill",&DoubleVector::fill)
+		   .   def("add",&DoubleVector::add)
+		   .   def("dot",&DoubleVector::dot)
+		   .   def("at",&DoubleVector::at)
+		   .   def("dump",&DoubleVector::dump,policies<>(),ARGS_dump,DECL_dump,DOCS_dump)
+		   ];
+};
+
+
+CLASP_REGISTER_STARTUP(startup);
