@@ -70,5 +70,5 @@ ir:
 
 
 clean:
-	rm -f *.bundle *.so
-	rm -f *.ll *.bc
+	(cd hello-world; rm -f *.bc *.so *.ll)
+	(cd double-vector; rm -f *.bc *.so *.ll)
