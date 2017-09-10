@@ -1,3 +1,10 @@
+//
+// Set up a clasp.h include file with all the good stuff
+//
+#include <stdio.h>
+#include <clasp/core/foundation.h>
+#include <clasp/clbind/clbind.h>
+#include <clasp/core/lambdaListHandler.h>
 
 #include <stdio.h>
 // clasp.h brings in everything needed for interop
@@ -14,6 +21,7 @@ double addThreeNumbers(double x, double y, double z)
     return x+y+z;
 }
 
+#if 0
 namespace translate {
     template <>
     struct from_object<float, std::true_type> {
@@ -30,7 +38,7 @@ namespace translate {
 	}
     };
 };
-
+#endif
     
 float addThreeSingleFloats(float x, float y, float z)
 {
