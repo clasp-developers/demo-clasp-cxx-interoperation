@@ -42,6 +42,8 @@ export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/cclasp-$(CLASP_RUNTIME)
 export COMMON_OPTIONS = -v \
 			-DX86_64 \
 			-D_ADDRESS_MODEL_64 \
+			-Wno-inconsistent-missing-override \
+			-Wno-macro-redefined \
 			-I$(CLASP_HOME)/include/ \
 			-I$(CLASP_HOME)/src/main \
 			-I$(CLASP_HOME)/build/$(GC) \
@@ -57,7 +59,6 @@ export COMMON_OPTIONS = -v \
 export DARWIN_OPTIONS = -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 			$(COMMON_OPTIONS) \
 			-D_TARGET_OS_DARWIN \
-			-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/8.0.0 \
 			-O3 \
 			-flat_namespace \
 			-undefined suppress \
@@ -70,6 +71,8 @@ export DARWIN_OPTIONS = -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 			-lgc \
 			-lreadline
 
+#			-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/8.0.0 \
+
 #			-I $(XCODE_INCLUDE) \
 #			-I $(CLASP_HOME)/include/clasp/core \
 #			-I $(CLASP_HOME)/include/clasp/clbind \
@@ -77,7 +80,7 @@ export DARWIN_OPTIONS = -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
 #			-I $(CLASP_HOME)/include/clasp/main \
 
 #			-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/6.0 \
-#			-resource-dir $(EXTERNALS_BUILD_TARGET_DIR)/release/bin/../lib/clang/3.6.1 \
+#			-resource-dir $(EXTERNALS_CLASP_DIR)/release/bin/../lib/clang/3.6.1 \
 
 #From makefile.faheem
 

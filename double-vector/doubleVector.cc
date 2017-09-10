@@ -106,7 +106,7 @@ namespace translate {
 			this->_v[idx++] = from_object<T>(oCar(c))._v;
 		    }
                 }
-            } else if (core::Vector_sp vec = obj.asOrNull<core::Vector_O>() ) {
+            } else if ( core::SimpleVector_sp vec = gc::As<core::SimpleVector_sp>(obj)) {
                 // Translate a VECTOR of doubles into a vector<T>
                 this->_v.resize(core::cl__length(vec));
                 for ( size_t idx(0); idx<vec->length(); ++idx ) {
