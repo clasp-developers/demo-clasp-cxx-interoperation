@@ -39,74 +39,6 @@ export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/cclasp-$(CLASP_RUNTIME)
 # -DNDEBUG suppresses link_compatibility checking in clbind that always fails - must fix
 
 
-export COMMON_OPTIONS = -v \
-			-DX86_64 \
-			-D_ADDRESS_MODEL_64 \
-			-Wno-inconsistent-missing-override \
-			-Wno-macro-redefined \
-			-I$(CLASP_HOME)/include/ \
-			-I$(CLASP_HOME)/src/main \
-			-I$(CLASP_HOME)/build/$(GC) \
-			$(CLASP_HOME)/build/$(GC)/fasl/$(GC)-all-cxx.a \
-			-I $(EXTERNALS_CLASP_DIR)/build/release/include \
-			-L $(EXTERNALS_CLASP_DIR)/build/release/lib \
-			-flto=thin \
-			-DNDEBUG \
-			-DBUILDING_CLASP 
-
-#			-L $(CLASP_HOME)/build/$(GC)/fasl/ \
-
-export DARWIN_OPTIONS = -DUSE_BOEHM -std=c++11 -stdlib=libc++ \
-			$(COMMON_OPTIONS) \
-			-D_TARGET_OS_DARWIN \
-			-O3 \
-			-flat_namespace \
-			-undefined suppress \
-			-bundle \
-			-Wl,-flat_namespace,-undefined,dynamic_lookup \
-			-Wno-deprecated-register \
-			-DCLASP_GC_FILENAME=$(CLASP_GC_FILENAME) \
-			-lboost_filesystem -lboost_regex -lboost_date_time -lboost_system \
-			-lgmp -lgmpxx \
-			-lgc \
-			-lreadline
-
-#			-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/8.0.0 \
-
-#			-I $(XCODE_INCLUDE) \
-#			-I $(CLASP_HOME)/include/clasp/core \
-#			-I $(CLASP_HOME)/include/clasp/clbind \
-#			-I $(CLASP_HOME)/include \
-#			-I $(CLASP_HOME)/include/clasp/main \
-
-#			-resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/6.0 \
-#			-resource-dir $(EXTERNALS_CLASP_DIR)/release/bin/../lib/clang/3.6.1 \
-
-#From makefile.faheem
-
-
-export LINUX_OPTIONS = $(COMMON_OPTIONS) \
-			-fPIC \
-			-std=c++11 \
-			-D_TARGET_OS_LINUX \
-			-DUSE_BOEHM \
-			-DCLASP_GC_FILENAME=$(CLASP_GC_FILENAME) \
-			-iquote $(CLASP_SOURCE)/../include/clasp/main \
-			-iquote $(CLASP_SOURCE)/../include/clasp \
-			-Wl,--start-group \
-			-Wl,--end-group \
-			-fuse-ld=gold \
-			--shared \
-			-lgmp -lgmpxx \
-			-lgc \
-			-lreadline -ltermcap 
-
-ifeq ($(TARGET_OS),Darwin)
-	export OPTIONS = $(DARWIN_OPTIONS) $(LOCAL_OPTIONS)
-else
-	export OPTIONS = $(LINUX_OPTIONS) $(LOCAL_OPTIONS)
-endif
-
 export OPTIONS = -v -I$(CLASP_HOME)/include \
 		-I$(CLASP_HOME)/src/main \
 		-I$(CLASP_HOME)/build/$(CLASP_RUNTIME) \
@@ -144,7 +76,7 @@ shell:
 
 
 ir:
-	clang++ -c -emit-llvm -std=c++11 -stdlib=libc++ -fvisibility=hidden -o helloWorld.bc helloWorld.cc
+	clang++ -c -emit-llvm -std=c++11 -stdlib=libc++ -fvisibility=hidden -o hello-world-cxx.bc hello-world-cxx.cc
 	llvm-dis helloWorld.bc
 
 

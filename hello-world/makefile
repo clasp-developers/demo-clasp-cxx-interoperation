@@ -1,9 +1,9 @@
 # makefile
 #
 
-helloWorld.bc:
-	$(CLANG) $(OPTIONS) -o helloWorld.bc helloWorld.cc
+hello-world-cxx.bc:
+	$(CLANG) $(OPTIONS) -o hello-world-cxx.bc hello-world-cxx.cc
 
 
-test: helloWorld.bc
+test: hello-world-cxx.bc
 	$(CLASP) -l hello-world.lsp

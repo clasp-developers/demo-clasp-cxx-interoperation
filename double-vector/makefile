@@ -1,9 +1,9 @@
 # makefile
 #
 
-doubleVector.bc:
-	$(CLANG) $(OPTIONS) -o doubleVector.bc doubleVector.cc
+double-vector-cxx.bc:
+	$(CLANG) $(OPTIONS) -o double-vector-cxx.bc double-vector-cxx.cc
 
 
-test: doubleVector.bc
+test: double-vector-cxx.bc
 	$(CLASP) -l double-vector.lsp
