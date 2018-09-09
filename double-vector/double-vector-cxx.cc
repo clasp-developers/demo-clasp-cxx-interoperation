@@ -7,7 +7,9 @@
 #include <clasp/clasp.h>
 #include <clasp/clbind/clbind.h>
 #include <clasp/core/numbers.h>
+#include <clasp/core/debugger.h>
 #include <clasp/core/array.h>
+#include <clasp/core/package.h>
 #include <clasp/core/translators.h>  // assorted translators for string etc
 #include <clasp/core/cons.h>
 
@@ -62,8 +64,9 @@ public:
     }
 
     // Note: Here I'm setting up arguments as a Common Lisp lambda-list for the method.
-    // Just don't go nuts with initializers. :-)
-#define ARGS_dump "(self &optional (prefix \"entry\"))"
+    // Just don't go nuts with initializers
+    // Need to prefix &optional with cl package because DV doesn't use COMMON-LISP
+#define ARGS_dump "(self cl:&optional (prefix \"entry\"))"
 #define DECL_dump ""
 #define DOCS_dump "Dump the vector using printf. Optionally provide a prefix string to print"
     void dump(const string& prefix ) {
@@ -125,6 +128,9 @@ void startup()
 {
     printf("Exporting functions\n");
     using namespace clbind;
+    std::list<std::string> nicknames;
+    std::list<std::string> usePackages;
+    core::Package_sp pkg = _lisp->makePackage("DV",nicknames,usePackages);
     package("DV") [
 		   class_<DoubleVector>("double-vector" ,no_default_constructor )
 		   .   def_constructor("make-double-vector-with-size",constructor<int>())

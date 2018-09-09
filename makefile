@@ -6,6 +6,10 @@ export TARGET_OS := $(or $(filter $(TARGET_OS), Linux),\
                          $(filter $(TARGET_OS), Darwin),\
                          $(error Invalid TARGET_OS: $(TARGET_OS)))
 
+# In local.config export the following environment variables
+# LLVM_CONFIG_PATH - path to llvm-config
+# CLASP_HOME - path to clasp
+# CLASP_RUNTIME  (boehm | mps)
 include $(wildcard local.config)
 
 # These are things that I'm hardcoding for now
@@ -15,20 +19,10 @@ include $(wildcard local.config)
 # the name depends on what extensions are in this
 # version of clasp
 export CLASP_GC_FILENAME='"clasp_gc.cc"'
-# GC sets the name of the GC
-export GC=boehm
 
-
-ifeq ($(CLANG),)
-export CLANG = $(EXTERNALS_CLASP_DIR)/build/release/bin/clang++
-endif
-
-# In local.config export the following environment variables
-# EXTERNALS_CLASP_DIR
-# CLASP_HOME
-# CLASP_RUNTIME  (boehm, mps, boehmdc)
-
-include $(wildcard local.config)
+export CLANG_DIR := $(shell $(LLVM_CONFIG_PATH) --bindir)
+export CLANG := $(CLANG_DIR)/clang++
+export LLVM_INCLUDE_DIR := $(shell $(LLVM_CONFIG_PATH) --includedir)
 
 # setup the clasp executable
 export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/cclasp-$(CLASP_RUNTIME)
@@ -44,6 +38,7 @@ export OPTIONS = -v -I$(CLASP_HOME)/include \
 		-I$(CLASP_HOME)/include/clasp/main \
 		-I$(CLASP_HOME)/build/$(CLASP_RUNTIME) \
 		-I$(CLASP_HOME)/build/$(CLASP_RUNTIME)/generated \
+		-I$(LLVM_INCLUDE_DIR) \
 		-c -emit-llvm \
 		-std=c++11 \
 		-Wno-macro-redefined \
@@ -78,7 +73,7 @@ shell:
 
 
 ir:
-	clang++ -c -emit-llvm -std=c++11 -stdlib=libc++ -fvisibility=hidden -o hello-world-cxx.bc hello-world-cxx.cc
+	$(CLANG) -c -emit-llvm -std=c++11 -stdlib=libc++ -fvisibility=hidden -o hello-world-cxx.bc hello-world-cxx.cc
 	llvm-dis helloWorld.bc
 
 

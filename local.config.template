@@ -1,10 +1,10 @@
 
 #
 # Location of the built externals-clasp 
-export EXTERNALS_CLASP_DIR = $(HOME)/Development/externals-clasp
+export LLVM_CONFIG_PATH = /usr/local/Cellar/llvm/6.0.1/bin/llvm-config
 
 # Location of clasp
-export CLASP_HOME = $(HOME)/Development/clasp
+export CLASP_HOME = $(HOME)/Development/dev-clasp
 
 # The Clasp runtime you want to use (boehm, mps, boehmdc)
 export CLASP_RUNTIME = boehm
