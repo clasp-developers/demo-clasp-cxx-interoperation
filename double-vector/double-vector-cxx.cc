@@ -2,8 +2,6 @@
 // Set up a clasp.h include file with all the good stuff
 //
 #include <stdio.h>
-#include <clasp/core/foundation.h>
-#include <clasp/core/common.h>
 #include <clasp/clasp.h>
 #include <clasp/clbind/clbind.h>
 #include <clasp/core/numbers.h>

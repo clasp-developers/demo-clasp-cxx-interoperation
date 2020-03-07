@@ -2,13 +2,8 @@
 // Set up a clasp.h include file with all the good stuff
 //
 #include <stdio.h>
-#include <clasp/core/foundation.h>
-#include <clasp/clbind/clbind.h>
-#include <clasp/core/lambdaListHandler.h>
-
-#include <stdio.h>
-// clasp.h brings in everything needed for interop
 #include <clasp/clasp.h>
+
 
 void helloWorld()
 {

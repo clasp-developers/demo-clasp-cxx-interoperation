@@ -46,6 +46,7 @@ export OPTIONS = -v -I$(CLASP_HOME)/include \
 		-Wno-inconsistent-missing-override
 
 all:
+	echo $(LLVM_CONFIG_PATH)
 	(cd hello-world; make $*)
 	(cd double-vector; make $*)
 
