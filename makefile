@@ -40,7 +40,7 @@ export OPTIONS = -v -I$(CLASP_HOME)/include \
 		-I$(CLASP_HOME)/build/$(CLASP_RUNTIME)/generated \
 		-I$(LLVM_INCLUDE_DIR) \
 		-c -emit-llvm \
-		-std=c++11 \
+		-std=c++14 \
 		-Wno-macro-redefined \
 		-Wno-deprecated-register \
 		-Wno-inconsistent-missing-override
@@ -74,7 +74,7 @@ shell:
 
 
 ir:
-	$(CLANG) -c -emit-llvm -std=c++11 -stdlib=libc++ -fvisibility=hidden -o hello-world-cxx.bc hello-world-cxx.cc
+	$(CLANG) -c -emit-llvm -std=c++14 -stdlib=libc++ -fvisibility=hidden -o hello-world-cxx.bc hello-world-cxx.cc
 	llvm-dis helloWorld.bc
 
 
