@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <clasp/clasp.h>
 
-
 void helloWorld()
 {
     printf("Hello World\n");
@@ -49,8 +48,10 @@ double addThreeNumbers_n_times(size_t n, double x, double y, double z)
     return result;
 }
 
-void startup()
+
+void my_startup()
 {
+    printf("Entered %s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__ );
     using namespace clbind;
     package("HW") [
 		   def("hello-world",&helloWorld)
@@ -58,6 +59,7 @@ void startup()
 		   , def("addThreeSingleFloats",&addThreeSingleFloats)
 		   , def("addThreeNumbers_n_times", &addThreeNumbers_n_times)
 		   ];
+    printf("%s:%d:%s Leaving\n", __FILE__, __LINE__, __FUNCTION__ );
 }
 
 
@@ -66,4 +68,8 @@ void startup()
 // Set this code up so that it can be loaded into Clasp
 //
 
-CLASP_REGISTER_STARTUP(startup);
+extern "C"
+void hello_world_startup() {
+    my_startup();
+}
+

@@ -8,3 +8,9 @@ export CLASP_HOME = $(HOME)/Development/clasp-dev
 
 # The Clasp runtime you want to use (boehm, mps)
 export CLASP_RUNTIME = boehm
+
+# The path to includes for the garbage collector, gnu gmp library and boost
+
+export GC_INCLUDE = /usr/local/Cellar/bdw-gc/8.0.4/include/
+export GMP_INCLUDE = /usr/local/Cellar/gmp/6.2.0/include/
+export BOOST_INCLUDE = /usr/local/Cellar/boost/1.72.0_1/include/

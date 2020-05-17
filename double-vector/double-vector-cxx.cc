@@ -142,4 +142,7 @@ void startup()
 };
 
 
-CLASP_REGISTER_STARTUP(startup);
+extern "C"
+void double_vector_startup() {
+    startup();
+}

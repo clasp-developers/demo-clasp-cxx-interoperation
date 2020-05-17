@@ -25,7 +25,7 @@ export CLANG := $(CLANG_DIR)/clang++
 export LLVM_INCLUDE_DIR := $(shell $(LLVM_CONFIG_PATH) --includedir)
 
 # setup the clasp executable
-export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/cclasp-$(CLASP_RUNTIME)
+export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/iclasp-$(CLASP_RUNTIME)
 
 # These are things that I'm hardcoding for now
 # but should be set up better using waf
@@ -33,17 +33,20 @@ export CLASP = $(CLASP_HOME)/build/$(CLASP_RUNTIME)/cclasp-$(CLASP_RUNTIME)
 # -DNDEBUG suppresses link_compatibility checking in clbind that always fails - must fix
 
 
-export OPTIONS = -v -I$(CLASP_HOME)/include \
+export OPTIONS = -v -c -I$(CLASP_HOME)/include -mcmodel=large\
 		-I$(CLASP_HOME)/src/main \
 		-I$(CLASP_HOME)/include/clasp/main \
 		-I$(CLASP_HOME)/build/$(CLASP_RUNTIME) \
 		-I$(CLASP_HOME)/build/$(CLASP_RUNTIME)/generated \
 		-I$(LLVM_INCLUDE_DIR) \
+		-I$(GC_INCLUDE) \
+		-I$(GMP_INCLUDE) \
+		-I$(BOOST_INCLUDE) \
 		-c -emit-llvm \
 		-std=c++14 \
 		-Wno-macro-redefined \
 		-Wno-deprecated-register \
-		-Wno-inconsistent-missing-override
+		-Wno-inconsistent-missing-overrider
 
 all:
 	echo $(LLVM_CONFIG_PATH)
