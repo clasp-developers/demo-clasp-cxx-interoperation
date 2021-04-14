@@ -3,13 +3,13 @@ hello-world
 
 Examples of exposing C++ to Clasp
 
-Copy local.config.template into local.config and edit it to configure your system.
+Clone this repository into the clasp/extensions directory
 
-To compile the demos use:
-<pre>make</pre> 
+To compile the demos build clasp as you normally would use:
+<pre>./waf build_cboehm</pre> 
 
 To run the demos type:
-<pre>make test</pre>
+<pre>(load "source-dir:extensions;demo.lisp")</pre>
 
 If you have any questions - come see us on IRC at:
 

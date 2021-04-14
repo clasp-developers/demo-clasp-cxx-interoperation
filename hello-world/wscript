@@ -1,0 +1,7 @@
+
+def configure(cfg):
+    pass
+
+def build(bld):
+    bld.extensions_source_files.append(bld.path.find_node("hello-world.cc"))
+    
