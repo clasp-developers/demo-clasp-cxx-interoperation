@@ -2,6 +2,9 @@
 
 from wscript_utils import *
 
+def analyze_clasp(cfg):
+    pass
+    
 def options(cfg):
     pass
 
