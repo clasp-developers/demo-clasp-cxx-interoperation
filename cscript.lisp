@@ -1,1 +1,2 @@
-(k:recurse #P"hello-world/")
+(k:recurse #P"hello-world/"
+           #P"double-vector/")

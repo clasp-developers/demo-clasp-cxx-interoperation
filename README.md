@@ -15,5 +15,5 @@ To build this demo do the following steps:
    ninja -C build
    ```
 
-To run the demos run `./build/boehmprecise/clasp` the execute the following in
-the Clasp REPL: `(hw:demo)`
+To run the demos run `./build/boehmprecise/clasp` then execute either `(hw:demo)`
+or `(dv:demo)` in the Clasp REPL.
