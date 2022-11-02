@@ -1,7 +1,7 @@
 (in-package :hello-world)
 
 (defun hello-world-from-lisp ()
-  (format t "Hello World~%This is C++ code being invoked from Clasp Common Lisp~%"))
+  (format t "Hello World~%This is Lisp code being invoked from Clasp Common Lisp~%"))
 
 (defun demo ()
   (hello-world-from-c++)

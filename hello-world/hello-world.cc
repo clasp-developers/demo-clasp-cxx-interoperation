@@ -41,6 +41,7 @@ void printColor(ColorEnum color) {
 // Set this code up so that it can be loaded into Clasp
 //
 
+PACKAGE_USE("COMMON-LISP");
 PACKAGE_NICKNAME("HW");
 NAMESPACE_PACKAGE_ASSOCIATION(hw, HWPkg, "HELLO-WORLD");
 
