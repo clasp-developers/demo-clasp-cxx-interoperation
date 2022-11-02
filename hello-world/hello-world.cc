@@ -4,46 +4,35 @@
 #include <stdio.h>
 #include <clasp/clasp.h>
 
-void helloWorld()
-{
-    printf("Hello World\n");
-    printf("This is C++ code being invoked from Clasp Common Lisp\n");
+void helloWorld() {
+  printf("Hello World\nThis is C++ code being invoked from Clasp Common Lisp\n");
 }
 
-double addThreeNumbers(double x, double y, double z)
-{
-    return x+y+z;
+double addThreeNumbers(double x, double y, double z) { return x + y + z; }
+
+float addThreeSingleFloats(float x, float y, float z) { return x + y + z; }
+
+double addThreeNumbers_n_times(size_t n, double x, double y, double z) {
+  double result = 0.0;
+  for (size_t i(0); i < n; ++i) {
+    result += x + y + z;
+  }
+  return result;
 }
 
-   
-float addThreeSingleFloats(float x, float y, float z)
-{
-    return x+y+z;
-}
+enum ColorEnum { red, green, blue };
 
-double addThreeNumbers_n_times(size_t n, double x, double y, double z)
-{
-    double result = 0.0;
-    for (size_t i(0); i<n; ++i ) {
-	result += x+y+z;
-    }
-    return result;
-}
-
-
-enum ColorEnum { red, green, blue  };
-
-void printColor( ColorEnum color ) {
+void printColor(ColorEnum color) {
   switch (color) {
   case red:
-      printf("red\n");
-      break;
+    printf("red\n");
+    break;
   case green:
-      printf("green\n");
-      break;
+    printf("green\n");
+    break;
   case blue:
-      printf("blue\n");
-      break;
+    printf("blue\n");
+    break;
   }
 }
 
@@ -53,29 +42,24 @@ void printColor( ColorEnum color ) {
 //
 
 PACKAGE_NICKNAME("HW");
-NAMESPACE_PACKAGE_ASSOCIATION(hw,HWPkg,"HELLO-WORLD");
+NAMESPACE_PACKAGE_ASSOCIATION(hw, HWPkg, "HELLO-WORLD");
 
-SYMBOL_EXPORT_SC_(HWPkg,STARcolorTranslatorSTAR);
-CLBIND_TRANSLATE_SYMBOL_TO_ENUM(ColorEnum, hw::_sym_STARcolorTranslatorSTAR );
+SYMBOL_EXPORT_SC_(HWPkg, STARcolorTranslatorSTAR);
+CLBIND_TRANSLATE_SYMBOL_TO_ENUM(ColorEnum, hw::_sym_STARcolorTranslatorSTAR);
 
 namespace hw {
 CL_EXPOSE
 void hello_world_startup() {
-  printf("Entered %s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__ );
+  printf("Entered %s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__);
   using namespace clbind;
   package_ pkg(HWPkg);
-  scope_& s = pkg.scope();
-  s.def("hello-world",&helloWorld);
-  s.def("addThreeNumbers",&addThreeNumbers);
-  s.def("addThreeSingleFloats",&addThreeSingleFloats);
+  scope_ &s = pkg.scope();
+  s.def("hello-world-from-c++", &helloWorld);
+  s.def("addThreeNumbers", &addThreeNumbers);
+  s.def("addThreeSingleFloats", &addThreeSingleFloats);
   s.def("addThreeNumbers_n_times", &addThreeNumbers_n_times);
-  enum_<ColorEnum>(s,hw::_sym_STARcolorTranslatorSTAR)
-      .value("red",red)
-      .value("green",green)
-      .value("blue",blue);
-  s.def("printColor",&printColor);
+  enum_<ColorEnum>(s, hw::_sym_STARcolorTranslatorSTAR).value("red", red).value("green", green).value("blue", blue);
+  s.def("printColor", &printColor);
 }
 
-
-};
-
+}; // namespace hw

@@ -1,8 +1,11 @@
-;;;
-;;; The path to the bitcode file needs to be added to the load command argument
-;;;
+(in-package :hello-world)
 
+(defun hello-world-from-lisp ()
+  (format t "Hello World~%This is C++ code being invoked from Clasp Common Lisp~%"))
 
-(hw:hello-world)
+(defun demo ()
+  (hello-world-from-c++)
+  (hello-world-from-lisp)
+  (format t "The result of (hw:add-three-numbers 1 2.0 3) --> ~a~%" (add-three-numbers 1 2.0 3)))
 
-(format t "The result of (hw:add-three-numbers 1 2.0 3) --> ~a~%" (hw:add-three-numbers 1 2.0 3))
+(export '(hello-world-from-lisp demo))
