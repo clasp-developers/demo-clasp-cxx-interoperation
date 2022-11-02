@@ -14,7 +14,7 @@
 #define DIAG
 
 namespace dv {
-class MismatchedSize : public std::exception {};
+class MismatchedDimension : public std::exception {};
 
 class DoubleVector {
 private:
@@ -22,55 +22,58 @@ private:
 
 public:
   DoubleVector(int sz) { this->values.resize(sz); };
+
   DoubleVector(const vector<double> &arg) { this->fill(arg); }
+
   void fill(const vector<double> &arg) {
     this->values.resize(arg.size());
     for (int i = 0; i < arg.size(); ++i) {
-      printf("Filling %d --> %lf\n", i, arg[i]);
       this->values[i] = arg[i];
     }
   }
 
   double &operator[](size_t idx) { return this->values[idx]; };
+
   const double &operator[](size_t idx) const { return this->values[idx]; };
-  size_t size() const { return this->values.size(); };
-  void setSize(int sz) { this->values.resize(sz, 0.0); };
-  void add(DoubleVector &result, const DoubleVector &y) {
-    if (result.size() != this->size() || this->size() != y.size()) {
-      throw MismatchedSize();
+
+  size_t dimension() const { return this->values.size(); };
+
+  void set_dimension(int sz) { this->values.resize(sz, 0.0); };
+
+  DoubleVector add(const DoubleVector &y) {
+    if (this->dimension() != y.dimension()) {
+      throw MismatchedDimension();
     }
-    for (int i = 0; i < this->size(); ++i) {
+    DoubleVector result(this->dimension());
+    for (int i = 0; i < this->dimension(); ++i) {
       result[i] = (*this)[i] + y[i];
     }
+    return result;
   }
-  double at(int i) {
-    if (i < 0 || i >= this->values.size()) {
+
+  double vref(int i) {
+    if (i < 0 || i >= this->dimension()) {
       SIMPLE_ERROR("Index out of bounds");
     }
     return this->values[i];
   };
+
+  double setf_vref(double value, int i) {
+    if (i < 0 || i >= this->dimension()) {
+      SIMPLE_ERROR("Index out of bounds");
+    }
+    return this->values[i] = value;
+  };
+
   double dot(const DoubleVector &y) {
-    if (this->size() != y.size()) {
-      throw MismatchedSize();
+    if (this->dimension() != y.dimension()) {
+      throw MismatchedDimension();
     }
     double dot = 0.0;
-    for (int i = 0; i < this->size(); ++i) {
+    for (int i = 0; i < this->dimension(); ++i) {
       dot += (*this)[i] * y[i];
     }
     return dot;
-  }
-
-  // Note: Here I'm setting up arguments as a Common Lisp lambda-list for the method.
-  // Just don't go nuts with initializers
-  // Need to prefix &optional with cl package because DV doesn't use COMMON-LISP
-#define ARGS_dump "(self cl:&optional (prefix \"entry\"))"
-#define DECL_dump ""
-#define DOCS_dump "Dump the vector using printf. Optionally provide a prefix string to print"
-  void dump(const string &prefix) {
-    printf("Dumping double-vector\n");
-    for (int i(0); i < this->values.size(); ++i) {
-      printf("%s[%3d] %lf\n", prefix.c_str(), i, this->values[i]);
-    }
   }
 };
 }; // namespace dv
@@ -124,13 +127,23 @@ void double_vector_startup() {
   using namespace clbind;
   package_ pkg(DVPkg);
   scope_ &s = pkg.scope();
+
   class_<DoubleVector>(s, "double-vector")
-      .def_constructor("make-double-vector-with-size", constructor<int>())
-      .def_constructor("make-double-vector-with-values", constructor<const vector<double> &>())
-      .def("fill", &DoubleVector::fill)
+      .def_constructor("make-double-vector", constructor<int>())
       .def("add", &DoubleVector::add)
       .def("dot", &DoubleVector::dot)
-      .def("at", &DoubleVector::at)
-      .def("dump", &DoubleVector::dump);
+      .def("vref", &DoubleVector::vref)
+      .def("dimension", &DoubleVector::dimension);
+
+  pkg.def(
+      "double-vector",
+      +[](core::Vaslist_sp args) {
+        DoubleVector res = DoubleVector(args->nargs());
+        for (size_t i = 0; args->nargs() > 0; i++) {
+          res[i] = core::clasp_to_float(args->next_arg());
+        }
+        return res;
+      },
+      "(core:&va-rest args)"_ll);
 }
 }; // namespace dv
