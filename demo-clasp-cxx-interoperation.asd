@@ -7,5 +7,4 @@
   :serial t
   :components ((:module "hello-world"
                 :serial t
-                :components ((:file "packages")
-                             (:file "hello-world.lisp")))))
+                :components ((:file "hello-world")))))

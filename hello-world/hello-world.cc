@@ -69,7 +69,7 @@ void hello_world_startup() {
   s.def("addThreeNumbers",&addThreeNumbers);
   s.def("addThreeSingleFloats",&addThreeSingleFloats);
   s.def("addThreeNumbers_n_times", &addThreeNumbers_n_times);
-  enum_<ColorEnum>(s,hw:_sym_STARcolorTranslatorSTAR)
+  enum_<ColorEnum>(s,hw::_sym_STARcolorTranslatorSTAR)
       .value("red",red)
       .value("green",green)
       .value("blue",blue);
