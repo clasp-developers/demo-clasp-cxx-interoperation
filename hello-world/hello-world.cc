@@ -53,10 +53,13 @@ CL_EXPOSE
 void hello_world_startup() {
   printf("Entered %s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__);
   using namespace clbind;
-  package_ pkg(HWPkg);
-  scope_ &s = pkg.scope();
-  s.def("hello-world-from-c++", &helloWorld);
-  s.def("addThreeNumbers", &addThreeNumbers);
+  package_ s(HWPkg);
+  // scope_ &s = pkg.scope();
+  s.def("hello-world-from-c++", &helloWorld,
+        "The classic! Print \"Hello World\""_docstring);
+  s.def("addThreeNumbers", &addThreeNumbers,
+        "(x cl:&optional (y 0.0) (z 0.0))"_ll,
+        "Add three numbers and return the result"_docstring);
   s.def("addThreeSingleFloats", &addThreeSingleFloats);
   s.def("addThreeNumbers_n_times", &addThreeNumbers_n_times);
   enum_<ColorEnum>(s, hw::_sym_STARcolorTranslatorSTAR).value("red", red).value("green", green).value("blue", blue);
