@@ -4,9 +4,7 @@
 #include <stdio.h>
 #include <clasp/clasp.h>
 
-void helloWorld() {
-  printf("Hello World\nThis is C++ code being invoked from Clasp Common Lisp\n");
-}
+void helloWorld() { printf("Hello World\nThis is C++ code being invoked from Clasp Common Lisp\n"); }
 
 double addThreeNumbers(double x, double y, double z) { return x + y + z; }
 
@@ -55,15 +53,13 @@ void hello_world_startup() {
   using namespace clbind;
   package_ s(HWPkg);
   // scope_ &s = pkg.scope();
-  s.def("hello-world-from-c++", &helloWorld,
-        "The classic! Print \"Hello World\""_docstring);
-  s.def("addThreeNumbers", &addThreeNumbers,
-        "(x cl:&optional (y 0.0) (z 0.0))"_ll,
+  s.def("hello-world-from-c++", &helloWorld, "The classic! Print \"Hello World\""_docstring);
+  s.def("addThreeNumbers", &addThreeNumbers, "(x cl:&optional (y 0.0) (z 0.0))"_ll,
         "Add three numbers and return the result"_docstring);
-  s.def("addThreeSingleFloats", &addThreeSingleFloats);
-  s.def("addThreeNumbers_n_times", &addThreeNumbers_n_times);
+  s.def("addThreeSingleFloats", &addThreeSingleFloats, "Add three single precision floating point numbers"_docstring);
+  s.def("addThreeNumbers_n_times", &addThreeNumbers_n_times, "Add three numbers n number of times"_docstring);
   enum_<ColorEnum>(s, hw::_sym_STARcolorTranslatorSTAR).value("red", red).value("green", green).value("blue", blue);
-  s.def("printColor", &printColor);
+  s.def("printColor", &printColor, "Print the color to stdout"_docstring);
 }
 
 }; // namespace hw

@@ -129,11 +129,12 @@ void double_vector_startup() {
   scope_ &s = pkg.scope();
 
   class_<DoubleVector>(s, "double-vector")
-      .def_constructor("make-double-vector", constructor<int>())
-      .def("add", &DoubleVector::add)
-      .def("dot", &DoubleVector::dot)
-      .def("vref", &DoubleVector::vref)
-      .def("dimension", &DoubleVector::dimension);
+      .def_constructor("make-double-vector", constructor<int>(), "", "", "Create a DOUBLE-VECTOR of a specific size.")
+      .def("add", &DoubleVector::add, "Add two vectors together."_docstring)
+      .def("dot", &DoubleVector::dot, "Computer the dot product of two vectors."_docstring)
+      .def("setf_vref", &DoubleVector::setf_vref, noAutoExport(), "Set a specific component of a vector."_docstring)
+      .def("vref", &DoubleVector::vref, "Return a specific component of a vector."_docstring)
+      .def("dimension", &DoubleVector::dimension, "Return the dimension of a vector."_docstring);
 
   pkg.def(
       "double-vector",
@@ -144,6 +145,6 @@ void double_vector_startup() {
         }
         return res;
       },
-      "(core:&va-rest args)"_ll);
+      "(core:&va-rest args)"_ll, "Create a double vector with specific components."_docstring);
 }
 }; // namespace dv
